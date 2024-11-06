@@ -5,8 +5,8 @@ module "jenkins" {
   name = "jenkins-tf"
 
   instance_type          = "t3.small"
-  vpc_security_group_ids = ["sg-0fea5e49e962e81c9"] #replace your SG
-  subnet_id = "subnet-0ea509ad4cba242d7" #replace your Subnet
+  vpc_security_group_ids = ["sg-0b3a7ad726e46614a"] #replace your SG
+  subnet_id = "subnet-0c97f776743355574" #replace your Subnet
   ami = data.aws_ami.ami_info.id
   user_data = file("jenkins.sh")
   tags = {
@@ -20,9 +20,9 @@ module "jenkins_agent" {
   name = "jenkins-agent"
 
   instance_type          = "t3.small"
-  vpc_security_group_ids = ["sg-0fea5e49e962e81c9"]
+  vpc_security_group_ids = ["sg-0b3a7ad726e46614a"]
   # convert StringList to list and get first element
-  subnet_id = "subnet-0ea509ad4cba242d7"
+  subnet_id = "subnet-0c97f776743355574"
   ami = data.aws_ami.ami_info.id
   user_data = file("jenkins-agent.sh")
   tags = {
@@ -30,13 +30,13 @@ module "jenkins_agent" {
   }
 }
 
-resource "aws_key_pair" "tools" {
-  key_name   = "tools"
-  # you can paste the public key directly like this
-  #public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6ONJth+DzeXbU3oGATxjVmoRjPepdl7sBuPzzQT2Nc sivak@BOOK-I6CR3LQ85Q"
-  public_key = file("~/.ssh/tools.pub")
-  # ~ means windows home directory
-}
+# resource "aws_key_pair" "tools" {
+#   key_name   = "tools"
+#   # you can paste the public key directly like this
+#   #public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6ONJth+DzeXbU3oGATxjVmoRjPepdl7sBuPzzQT2Nc sivak@BOOK-I6CR3LQ85Q"
+#   public_key = file("~/.ssh/tools.pub")
+#   # ~ means windows home directory
+# }
 
 # module "nexus" {
 #   source  = "terraform-aws-modules/ec2-instance/aws"
